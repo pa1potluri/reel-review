@@ -31,6 +31,7 @@ section{padding:56px 0;border-bottom:1px solid var(--line)}h2{font-size:30px;mar
 .choose{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px}.choose button{font:inherit;font-size:15px;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);cursor:pointer}
 .choose button.on{border-color:var(--gold);color:var(--gold)}.muted{color:var(--muted);font-size:15px}
 .qrbox{background:#fff;border-radius:16px;padding:18px;text-align:center;color:#222}.qrbox #qr{display:flex;justify-content:center}.qrbox small{display:block;margin-top:10px;font-weight:700}
+.paid{display:flex;gap:10px;align-items:center;margin-top:18px;font-weight:700;cursor:pointer}.paid input{width:22px;height:22px;accent-color:var(--gold)}
 .note{background:#2a1f12;border:1px dashed var(--gold);color:#f5dca8;padding:10px 14px;border-radius:10px;font-size:14px;margin-top:16px}
 </style>
 </head>
@@ -39,7 +40,7 @@ section{padding:56px 0;border-bottom:1px solid var(--line)}h2{font-size:30px;mar
   <span class="tag">VFX Supervisor · 21 years · Ex-Sony Pictures Imageworks</span>
   <h1>Get your reel reviewed by the person who <em>used to approve the shots.</em></h1>
   <p class="lead">I'm Pavan Kumar Potluri. For 7 years I was Comp/Paint Supervisor and Lead at Sony Pictures Imageworks. Now I help compositors get the notes a studio supervisor would give, before the studio does.</p>
-  <a class="btn" href="https://calendar.app.google/vpUpNvoYnKoCtLXT6" target="_blank" rel="noopener">Book a reel review</a><a class="btn ghost" href="#offers">See all options</a>
+  <a class="btn" href="#pay">Book a reel review</a><a class="btn ghost" href="#offers">See all options</a>
   <div class="credits"><span>The Amazing Spider-Man 2</span><span>Edge of Tomorrow</span><span>Oz the Great and Powerful</span><span>Men in Black 3</span><span>Green Lantern</span><span>Alice in Wonderland</span><span>Watchmen</span><span>Transformers: Rise of the Beasts</span><span>Into the Badlands</span><span>The Great Indian Murder</span></div>
 </div></header>
 
@@ -64,20 +65,18 @@ section{padding:56px 0;border-bottom:1px solid var(--line)}h2{font-size:30px;mar
   </div>
 </div></section>
 
-<section id="book"><div class="wrap">
+<section id="how"><div class="wrap">
   <h2>How it works</h2>
   <ol class="steps">
-    <li>Choose an option and pick a time that suits you.</li>
-    <li>Pay securely (UPI / card in India, PayPal or card abroad).</li>
+    <li>Choose an option and pay with UPI below (from outside India: message me on LinkedIn for a PayPal link).</li>
+    <li>Pick your time on my calendar. One person per slot; bookings without payment are cancelled.</li>
     <li>Send your reel as a private download (Google Drive or WeTransfer, full resolution). Studio work stays private: I review it on my own machine, never share it, and delete it after your session.</li>
     <li>We meet on Google Meet, and you get written notes after.</li>
   </ol>
-  <a class="btn" id="bookBtn" href="#" target="_blank" rel="noopener">1 · Book a time</a>
-  <p class="note" id="bookNote">Draft: the booking link gets added here.</p>
 </div></section>
 
 <section id="pay"><div class="wrap">
-  <h2>2 · Pay with UPI</h2>
+  <h2>1 · Pay with UPI</h2>
   <div class="paygrid">
     <div>
       <div class="choose">
@@ -88,9 +87,18 @@ section{padding:56px 0;border-bottom:1px solid var(--line)}h2{font-size:30px;mar
       <p class="muted">Scan with GPay, PhonePe, Paytm or any UPI app. The amount is filled in for you.</p>
       <p>UPI ID: <strong>pa1.potluri@okaxis</strong> (Pavan Potluri)</p>
       <a class="btn" id="upiBtn" href="#">Pay on this phone</a>
-      <p class="muted">3 · After paying, send the payment screenshot and your private reel download link by LinkedIn message. Your slot is confirmed within a few hours.<br>Paying from outside India? Message me on LinkedIn for a PayPal link.</p>
+      <label class="paid"><input type="checkbox" id="paidBox"> I have paid</label>
     </div>
     <div class="qrbox"><div id="qr"></div><small id="qrLabel"></small></div>
+  </div>
+</div></section>
+
+<section id="book"><div class="wrap">
+  <h2>2 · Book your time</h2>
+  <p class="muted" id="bookWait">Pay first, then tick "I have paid" above to open the calendar.</p>
+  <div id="bookOpen" hidden>
+    <a class="btn" id="bookBtn" href="#" target="_blank" rel="noopener">Pick a time on my calendar</a>
+    <p class="muted">3 · Then send your payment screenshot and your private reel download link by <a href="https://www.linkedin.com/in/pavanpotluri" target="_blank" rel="noopener">LinkedIn message</a>. Bookings without a matching payment are cancelled.</p>
   </div>
 </div></section>
 
@@ -109,7 +117,8 @@ function pick(b){
 }
 document.querySelectorAll('.choose button').forEach(b=>b.onclick=()=>pick(b));
 pick(document.querySelector('.choose button.on'));
-if(BOOK){document.getElementById('bookBtn').href=BOOK;document.getElementById('bookNote').remove();}
+document.getElementById('bookBtn').href=BOOK;
+document.getElementById('paidBox').onchange=e=>{document.getElementById('bookOpen').hidden=!e.target.checked;document.getElementById('bookWait').hidden=e.target.checked;if(e.target.checked)document.getElementById('book').scrollIntoView({behavior:'smooth'});};
 </script>
 </body>
 </html>
